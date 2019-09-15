@@ -1,0 +1,85 @@
+.progress {
+    height: 30px;
+}
+
+.progress-bar {
+    width:100%;
+    font-size: 14px;
+}
+
+.tab-content {
+    padding-top: 20px;
+}
+
+.phone-panel {
+    display: flex;
+    width: 100%;
+}
+
+.phone-number {
+    display: flex;
+    width: 150%;
+    flex-grow: -2;
+    margin-right: 40px;
+}
+
+.phone-number-label {
+    width: 140px;
+}
+
+.country-code {
+    display: flex;
+    width: 100%;
+}
+
+.country-code-label {
+    width: 30%;
+}
+
+.first-last-names-panel {
+    display: flex;
+    width: 100%;
+}
+
+.first-name {
+    display: flex;
+    width: 150%;
+    flex-grow: -2;
+    margin-right: 40px;
+}
+
+.first-name-label {
+    width: 140px;
+}
+
+.last-name {
+    display: flex;
+    width: 100%;
+}
+
+.last-name-label {
+    width: 30%;
+}
+
+.multiple-matches-label {
+    color: red;
+}
+
+.multiple-matches-cont {
+    border: 1px solid red;
+    padding: 0 10px;
+}
+
+#login {
+    margin-top:20px;
+}
+
+#token-holder {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#token {
+    margin-top:20px;
+}

@@ -1,0 +1,7 @@
+EXISTS
+  (SELECT cp.client_id
+  FROM seaware.CLIENT_PROGRAM cp
+  WHERE TRUNC(sysdate) BETWEEN cp.DATE_FROM AND cp.DATE_TO
+  AND cp.club_account=:club_one
+  AND NLSSORT(t.FIRST_NAME, 'NLS_SORT = BINARY_AI') = NLSSORT(:first_name, 'NLS_SORT = BINARY_AI')
+  AND NLSSORT(t.LAST_NAME, 'NLS_SORT = BINARY_AI') = NLSSORT(:last_name, 'NLS_SORT = BINARY_AI'))

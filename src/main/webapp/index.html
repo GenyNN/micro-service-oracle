@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 3rd Party Components -->
+    <script src="scripts/angular.min.js"> </script>
+    <script src="scripts/ui-bootstrap-custom-tpls-2.0.2.js"> </script>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/bootstrap-theme.min.css">
+    <!-- Custom content -->
+    <script src="scripts/people.controller.js"> </script>
+    <link rel="stylesheet" href="styles/people.css">
+</head>
+<body ng-controller="PeopleCtrl">
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-9">
+            <h2>Search parameters</h2>
+        </div>
+        <div class="col-xs-3" ng-show="!token">
+            <a href="http://wwtll210d.fleet.zone:28097/#?goto=http%3A%2F%2Fwwtll200d%3A28186%2F%23"
+               class="btn btn-info" role="button" id="login">
+                Login with SSO
+            </a>
+        </div>
+        <div class="col-xs-3" ng-show="token" id="token-holder">
+            <span id="token">SSO token: {{token}}</span>
+        </div>
+    </div>
+    <form>
+        <uib-tabset active="activeForm">
+            <uib-tab index="0" heading="Email">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" name="clientEmail" ng-model="model.email.email" id="email">
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Phone">
+                <div class="form-group phone-panel">
+                    <div class="phone-number">
+                        <label class="phone-number-label" for="phone">Phone number:</label>
+                        <input type="text" class="form-control" name="clientPhone" ng-model="model.phone.phone" id="phone">
+                    </div>
+                    <div class="country-code">
+                        <label class="country-code-label" for="countryCode" >Country code:</label>
+                        <input type="text" uib-typeahead="code for code in countryCodes | filter:$viewValue | limitTo:8" class="form-control" name="clientCountryCode" ng-model="model.phone.countryCode" id="countryCode">
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="2" heading="Club One">
+                <div class="form-group">
+                    <label for="clubOne">Club One:</label>
+                    <input type="text" class="form-control" name="clientClubOne" ng-model="model.clubone.clubOne" id="clubOne">
+                </div>
+                <div class="form-group first-last-names-panel">
+                    <div class="first-name">
+                        <label for="firstName" class="first-name-label">First name:</label>
+                        <input type="text" class="form-control" name="clientFirstName" ng-model="model.clubone.firstName" id="firstName">
+                    </div>
+                    <div class="last-name">
+                        <label for="lastName" class="last-name-label">Last name:</label>
+                        <input type="text" class="form-control" name="clientLastName" ng-model="model.clubone.lastName" id="lastName">
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+        <p>Click <input type="button" class="btn btn-default" value="push" ng-click="loadClients()"/> here to load the data.</p>
+    </form>
+
+    <div class="progress" ng-show="requestInProgress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar"
+             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+            Please wait for the search results
+        </div>
+    </div>
+
+    <div class="col-xs-12" style="height:50px;"></div>
+
+    <div ng-hide="timeElapsed == null">
+        Request executed : {{timeElapsed}} ms
+    </div>
+
+    <div ng-show="bestMatchClients.length">
+        <h2>Best Match Clients</h2>
+
+        <div class="multiple-matches-cont">
+            <h2 ng-show="bestMatchClients.length > 1" class="multiple-matches-label">multiple matches, contact call center</h2>
+        </div>
+         <table class="table">
+             <tr>
+                 <th>Client Id</th>
+                 <th>Full Name</th>
+                 <th>Birthday</th>
+                 <th>Club Account</th>
+                 <th>Club Account Type</th>
+                 <th>Zip City</th>
+                 <th>Address</th>
+                 <th>Phone Number</th>
+                 <th>Email</th>
+             </tr>
+             <tr ng-repeat="bestMatchClient in bestMatchClients">
+                 <td><p>{{bestMatchClient.CLIENT_ID}}</p></td>
+                 <td><p>{{bestMatchClient.FULL_NAME}}<p></td>
+                 <td><p>{{person.BIRTHDAY}}<p></td>
+                 <td><p>{{bestMatchClient.CLUB_ACCOUNT}}<p></td>
+                 <td><p>{{bestMatchClient.CLUB_ACCOUNT_TYPE}}<p></td>
+                 <td><p>{{bestMatchClient.ZIP_CITY}}</p></td>
+                 <td><p>{{bestMatchClient.ADDRESS}}<p></td>
+                 <td><p>{{bestMatchClient.PHONE_NUMBER}}<p></td>
+                 <td><p>{{bestMatchClient.EMAIL}}<p></td>
+             </tr>
+         </table>
+    </div>
+
+    <div ng-show="otherClients.length">
+         <h2>Other Clients</h2>
+         <table class="table">
+             <tr>
+                 <th>Client Id</th>
+                 <th>Full Name</th>
+                 <th>Birthday</th>
+                 <th>Club Account</th>
+                 <th>Club Account Type</th>
+                 <th>Zip City</th>
+                 <th>Address</th>
+                 <th>Phone Number</th>
+                 <th>Email</th>
+             </tr>
+             <tr ng-repeat="person in otherClients">
+                 <td><p>{{person.CLIENT_ID}}</p></td>
+                 <td><p>{{person.FULL_NAME}}<p></td>
+                 <td><p>{{person.BIRTHDAY}}<p></td>
+                 <td><p>{{person.CLUB_ACCOUNT}}<p></td>
+                 <td><p>{{person.CLUB_ACCOUNT_TYPE}}<p></td>
+                 <td><p>{{person.ZIP_CITY}}</p></td>
+                 <td><p>{{person.ADDRESS}}<p></td>
+                 <td><p>{{person.PHONE_NUMBER}}<p></td>
+                 <td><p>{{person.EMAIL}}<p></td>
+             </tr>
+         </table>
+    </div>
+ </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+UPPER(t.email) IN (:emails) AND t.FIRST_NAME = :first_name AND t.LAST_NAME = :last_name

@@ -1,0 +1,1 @@
+UPPER(t.FULL_NAME) LIKE CONCAT(UPPER(:full_name), '%')
